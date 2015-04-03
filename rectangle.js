@@ -5,6 +5,11 @@
 
     tagName: 'div',
     className: 'rectangle',
+    
+    events: {
+      'click': 'move',
+    },
+
     render: function(){
       this.setDimensions();
       this.setPosition();
@@ -32,32 +37,46 @@
       this.$el.css({
         background: color
       });
+    },
+
+    move: function(){
+      this.$el.css('left',this.$el.position().left + 10);
     }
   });
 
-  var myRectangle = new Rectangle({
-    width: 100,
-    height: 60,
-    position: {
-      x: 300,
-      y: 150
-    },
-    color: 'red'
-  });
 
-  var secondRectangle = new Rectangle({
-     width: 200,
+  var rectangleModels = [
+    new Rectangle({
+      width: 100,
+      height: 60,
+      position: {
+        x: 300,
+        y: 150
+      },
+      color: 'red'
+  }),
+  new Rectangle({
+    width: 200,
     height: 120,
     position: {
       x: 320,
       y: 200
     },
     color: 'yellow'
-  });
+  }),
+  new Rectangle({
+    width: 100,
+    height: 120,
+    position: {
+      x: 360,
+      y: 150
+    },
+    color: 'pink'
+  }),
 
-  var myView = new RectangleView({model: myRectangle});
-  var secondView = new RectangleView({model: secondRectangle});
-
-  $('div#canvas').append(myView.render().el);
-  $('div#canvas').append(secondView.render().el);
+  ];
+  
+  _(rectangleModels).each(function(model){
+    $('div#canvas').append(new RectangleView({model: model}).render().el);
+  })
 })();
